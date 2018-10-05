@@ -11,6 +11,8 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.google.gson.Gson;
+
 public class MainActivity extends AppCompatActivity {
 
 	public static final String idLove = "default";
@@ -39,5 +41,37 @@ public class MainActivity extends AppCompatActivity {
 						.setContentText("Hi, my love!")
 						.setChannelId(idLove);
 		notificationManager.notify(1, builder.build());
+
+		JsonToTiltle();
+	}
+
+	private String JsonToTiltle()
+	{
+		String data = "{\"title\":\"晚餐服藥\",\"content\":\"紅包配溫開水\"}";
+		Gson gson = new Gson();
+		Message m = gson.fromJson(data, Message.class);
+		System.out.println();
+		System.out.println(m);
+
+		return m.toString();
+	}
+
+	class Message {
+		private String title;
+		private String content;
+
+		public Message(String title, String contenxt) {
+			this.title = title;
+			this.content = contenxt;
+		}
+
+		@Override
+		public String toString() {
+			return "Data{" +
+					"title='" + title + '\'' +
+					", content=" + content +
+					'}';
+		}
+
 	}
 }
