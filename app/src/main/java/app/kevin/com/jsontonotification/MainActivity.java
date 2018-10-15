@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import junit.framework.Test;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,7 +30,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 	private AlarmManager alarmManager;
 	private PendingIntent pendingIntent;
-
+	private String Testdata = "{\"title\":\"晚餐服藥\",\"content\":\"紅包配溫開水\", \"date\":\"2018-10-15 17:22:30:033\"}";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,13 +47,15 @@ public class MainActivity extends AppCompatActivity {
 		alarmBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// 设置闹钟时间
 				Calendar calendar = Calendar.getInstance();
-				calendar.setTimeInMillis(System.currentTimeMillis());
-				calendar.set(2012, 9, 15);        //在Calendar類別中月份的編號是由0~11
-				calendar.set(Calendar.HOUR_OF_DAY, 17);
-				calendar.set(Calendar.MINUTE, 1);
-				calendar.set(Calendar.SECOND, 30);
+				calendar.setTime(JsonToMessage(Testdata).date);
+
+				// 设置闹钟时间
+//				calendar.setTimeInMillis(System.currentTimeMillis());
+//				calendar.set(2012, 9, 15);        //在Calendar類別中月份的編號是由0~11
+//				calendar.set(Calendar.HOUR_OF_DAY, 17);
+//				calendar.set(Calendar.MINUTE, 1);
+//				calendar.set(Calendar.SECOND, 30);
 
 				setAlarm(calendar);
 			}
@@ -78,5 +82,18 @@ public class MainActivity extends AppCompatActivity {
 
 		Toast.makeText(this, "设置成功", Toast.LENGTH_SHORT).show();
 
+	}
+
+	private Message JsonToMessage(String data) {
+		Gson gson = new GsonBuilder()
+				.setPrettyPrinting()//格式化输出
+				.setDateFormat("yyyy-MM-dd HH:mm:ss:SSS")//格式化时间
+				.create();
+
+		Message m = gson.fromJson(data, Message.class);
+		System.out.println();
+		System.out.println(m);
+
+		return m;
 	}
 }
