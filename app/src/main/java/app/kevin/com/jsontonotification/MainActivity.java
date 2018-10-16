@@ -30,12 +30,14 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 	private AlarmManager alarmManager;
 	private PendingIntent pendingIntent;
-	private String Testdata = "{\"title\":\"晚餐服藥\",\"content\":\"紅包配溫開水\", \"date\":\"2018-10-15 17:22:30:033\"}";
+	public static Message _message;
+	private String Testdata = "{\"title\":\"晚餐服藥\",\"content\":\"紅包配溫開水\", \"date\":\"2018-10-15 18:00:10:033\"}";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		_message = JsonToMessage(Testdata);
 		initView();
 		initAlarm();
 	}
@@ -48,14 +50,7 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				Calendar calendar = Calendar.getInstance();
-				calendar.setTime(JsonToMessage(Testdata).date);
-
-				// 设置闹钟时间
-//				calendar.setTimeInMillis(System.currentTimeMillis());
-//				calendar.set(2012, 9, 15);        //在Calendar類別中月份的編號是由0~11
-//				calendar.set(Calendar.HOUR_OF_DAY, 17);
-//				calendar.set(Calendar.MINUTE, 1);
-//				calendar.set(Calendar.SECOND, 30);
+				calendar.setTime(_message.date);	//Date 轉換為 calendar
 
 				setAlarm(calendar);
 			}
@@ -69,7 +64,13 @@ public class MainActivity extends AppCompatActivity {
 		// 设置闹钟触发动作
 		Intent intent = new Intent(this, AlarmBroadcast.class);
 		intent.setAction("startAlarm");
-		pendingIntent = PendingIntent.getBroadcast(this, 110, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+		//intent傳送自定義object, object需要序列化至bundle中
+		Bundle bundle = new Bundle();
+		bundle.putSerializable("message", _message);
+		intent.putExtra("bundle", bundle);
+
+		pendingIntent = PendingIntent.getBroadcast(this, 110, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		// 取消闹钟
 //        alarmManager.cancel(pendingIntent);

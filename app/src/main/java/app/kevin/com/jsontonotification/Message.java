@@ -1,10 +1,11 @@
 package app.kevin.com.jsontonotification;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class Message {
+public class Message implements Serializable{
         public String title;
         public String content;
         public Date date;
