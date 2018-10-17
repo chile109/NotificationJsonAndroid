@@ -34,8 +34,8 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 	private AlarmManager alarmManager;
-	private String TestData2 = "[{\"title\":\"中午注射\",\"content\":\"胰島素30cc\",\"date\":\"2018-10-17 11:57:30:033\"}," +
-			"{\"title\":\"晚間服藥\",\"content\":\"紅包配白開水\",\"date\":\"2018-10-17 11:58:00:033\"}]";
+	private String TestData2 = "[{\"title\":\"中午注射\",\"content\":\"胰島素30cc\",\"date\":\"2018-10-17 11:57:30\"}," +
+			"{\"title\":\"晚間服藥\",\"content\":\"紅包配白開水\",\"date\":\"2018-10-17 11:58:00\"}]";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 	private Message[] JsonToMessage(String data) {
 		Gson gson = new GsonBuilder()
 				.setPrettyPrinting()//格式化输出
-				.setDateFormat("yyyy-MM-dd HH:mm:ss:SSS")//格式化时间
+				.setDateFormat("yyyy-MM-dd HH:mm:ss")//格式化时间
 				.create();
 
 		Message[] messageArray = gson.fromJson(TestData2, Message[].class);
