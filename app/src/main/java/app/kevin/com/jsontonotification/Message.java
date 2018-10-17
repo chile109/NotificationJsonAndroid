@@ -1,20 +1,22 @@
 package app.kevin.com.jsontonotification;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 public class Message implements Serializable{
-        public String title;
-        public String content;
-        public Date date;
 
-        public Message(String title, String contenxt, Date date) {
-            this.title = title;
-            this.content = contenxt;
-            this.date = date;
-        }
+    @SerializedName("title")
+    public String title;
+
+    @SerializedName("content")
+    public String content;
+
+    @SerializedName("date")
+    public Date date;
 
         @Override
         public String toString() {
