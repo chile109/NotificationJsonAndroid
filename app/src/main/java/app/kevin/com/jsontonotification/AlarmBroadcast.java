@@ -9,10 +9,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import java.util.Date;
+import java.util.Random;
+
 public class AlarmBroadcast extends BroadcastReceiver {
     public static final String MedicineChanel = "default";
-
-
     @Override
     public void onReceive(Context context, Intent intent) {
 
@@ -40,7 +41,9 @@ public class AlarmBroadcast extends BroadcastReceiver {
                             .setContentTitle(m.title)
                             .setContentText(m.content)
                             .setChannelId(MedicineChanel);
-            notificationManager.notify(1, builder.build());
+
+            Random r = new Random();
+            notificationManager.notify(r.nextInt(), builder.build());
         }
     }
 
